@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía del Plan de Trabajo - Optimización Comercial</title>
+    <!-- Paleta Elegida: Azules Brillantes -->
+    <!-- Plan de Estructura de la Aplicación: La infografía sigue un viaje narrativo desde el diagnóstico hasta los resultados. Comienza con una sección de héroe que establece el valor del proyecto. El núcleo es una línea de tiempo vertical (usando HTML/CSS) que representa visualmente las fases del proyecto. Cada fase es una tarjeta con detalles clave. A esto le sigue una sección de tablero de "Datos y Resultados" dedicada con gráficos interactivos (Barras, Donut, Línea) para dar una vista previa tangible de los resultados analíticos del proyecto. Se añade una nueva barra de navegación superior, que alberga el menú desplegable "Contacto". La estructura concluye con "Nuestro Enfoque" y "Próximos Pasos" para reforzar el valor y la llamada a acción. Esta estructura narrativa es más atractiva que un informe estático y guía al cliente lógicamente a través de la propuesta de valor. -->
+    <!-- Opciones de Visualización y Contenido: Información del Informe: Fases del Proyecto -> Objetivo: Organizar -> Visualización: Línea de tiempo vertical (HTML/CSS) -> Interacción: Revelación basada en el desplazamiento -> Justificación: Muestra una progresión clara. Información del Informe: Detalles de la Fase -> Objetivo: Informar -> Visualización: Tarjetas con estilo (HTML/CSS) -> Justificación: Desglosa el texto para facilitar la lectura. Información del Informe: Rentabilidad/Facturación -> Objetivo: Comparar/Informar -> Visualización: Gráficos de barras y de donut (Chart.js) -> Justificación: Lo mejor para comparar categorías y mostrar la composición. Información del Informe: Proyecciones -> Objetivo: Cambio -> Visualización: Gráfico de líneas (Chart.js) -> Justificación: Estándar para mostrar tendencias. Información del Informe: "Nuestro Enfoque" -> Objetivo: Informar -> Visualización: Iconos SVG (en línea) -> Justificación: Visualmente escaneable, moderno y permite animaciones más complejas. Botón flotante de WhatsApp -> Objetivo: Informar/Contactar -> Visualización: Botón HTML/CSS con estilo con icono Unicode -> Interacción: Enlace directo a la API de WhatsApp -> Justificación: Proporciona acceso persistente y fácil para el contacto con el cliente. Navegación superior con menú desplegable "Contacto" -> Objetivo: Informar/Contactar -> Visualización: Menú desplegable HTML/CSS con estilo con enlaces de texto e iconos Unicode -> Interacción: Pasar el ratón para revelar, hacer clic para alternar la visibilidad -> Justificación: Ofrece un punto de contacto limpio y accesible con una experiencia de usuario mejorada tanto para el paso del ratón como para las interacciones de clic. Nuevo: Animaciones activadas por desplazamiento para secciones -> Objetivo: Enganchar -> Visualización: Animaciones CSS activadas por Intersection Observer de JS -> Justificación: Añade un atractivo visual dinámico a medida que el usuario se desplaza. Nuevo: Botón "Volver arriba" -> Objetivo: Mejorar la UX -> Visualización: Botón fijo con desplazamiento suave de JS -> Justificación: Mejora la navegación en páginas largas. -->
+    <!-- CONFIRMACIÓN: NO se utiliza Mermaid JS. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #FBFBFF;
+            --text-color: #0B4F6C;
+            --heading-color: #040F16;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --light-gray-text: #9CA3AF;
+            --dark-gray-text: #4A5568;
+            --primary-blue: #01BAEF;
+            --dark-blue: #0B4F6C;
+            --whatsapp-green: #25D366;
+            --whatsapp-dark-green: #1DA851;
+            --dropdown-bg: white;
+            --dropdown-hover-bg: #E0F2F7;
+            --back-to-top-bg: #757575;
+            --back-to-top-hover-bg: #5a5a5a;
+            --timeline-line-color: #cbd5e1;
+            --input-bg: #ffffff;
+            --input-border: #d1d5db;
+            --input-text: #1f2937;
+        }
+
+        .dark-mode {
+            --bg-color: #121212; /* Fondo más oscuro para un look más profesional */
+            --text-color: #e0e0e0; /* Texto claro para mejor contraste */
+            --heading-color: #ffffff; /* Títulos blancos */
+            --card-bg: #1e1e1e; /* Fondo de tarjeta más oscuro */
+            --card-border: #333333; /* Borde de tarjeta sutil */
+            --light-gray-text: #aaaaaa; /* Gris claro para texto secundario */
+            --dark-gray-text: #e0e0e0; /* Texto principal en gris claro */
+            --primary-blue: #01BAEF; /* Azul primario sin cambios */
+            --dark-blue: #0B4F6C; /* Azul oscuro sin cambios */
+            --whatsapp-green: #25D366; /* Verde WhatsApp sin cambios */
+            --whatsapp-dark-green: #1DA851; /* Verde oscuro WhatsApp sin cambios */
+            --dropdown-bg: #1e1e1e; /* Fondo de menú desplegable oscuro */
+            --dropdown-hover-bg: #333333; /* Fondo de menú desplegable al pasar el ratón */
+            --back-to-top-bg: #444444; /* Fondo del botón "volver arriba" oscuro */
+            --back-to-top-hover-bg: #555555; /* Fondo del botón "volver arriba" al pasar el ratón */
+            --timeline-line-color: #555555; /* Color de la línea de tiempo más oscuro */
+            --input-bg: #333333; /* Fondo de input oscuro */
+            --input-border: #555555; /* Borde de input oscuro */
+            --input-text: #e0e0e0; /* Texto de input claro */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--heading-color);
+        }
+        p {
+            font-size: 1rem; /* Default paragraph font size */
+            line-height: 1.7; /* Improved line height for readability */
+            margin-bottom: 1rem; /* Consistent bottom margin for paragraphs */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid var(--primary-blue);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .whatsapp-float-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background-color: var(--whatsapp-green);
+            border-radius: 50%;
+            color: white;
+            font-size: 32px; /* Icono más grande */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            z-index: 1000;
+        }
+        .whatsapp-float-button:hover {
+            background-color: var(--whatsapp-dark-green);
+            transform: scale(1.05);
+        }
+        .whatsapp-float-button svg {
+            width: 32px; /* Ajusta el tamaño del SVG */
+            height: 32px; /* Ajusta el tamaño del SVG */
+            stroke: currentColor; /* Usa el color del texto del botón */
+        }
+        /* Estilos específicos del menú desplegable para la parte superior derecha */
+        .contact-dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: var(--dropdown-bg);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 0.5rem; /* rounded-lg */
+            overflow: hidden;
+            top: 100%; /* Posicionar debajo del botón */
+            right: 0; /* Alinear a la derecha */
+            margin-top: 0; /* Eliminar el espacio */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .contact-dropdown-menu a {
+            color: var(--dark-blue); /* Azul oscuro */
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            text-align: left;
+        }
+        .contact-dropdown-menu a:hover {
+            background-color: var(--dropdown-hover-bg); /* Azul claro al pasar el ratón */
+        }
+        .contact-dropdown:hover .contact-dropdown-menu {
+            display: block;
+        }
+        /* Clase para abrir al hacer clic */
+        .contact-dropdown-menu.is-open {
+            display: block;
+        }
+        .contact-dropdown-menu a span {
+            margin-right: 8px; /* Espacio entre el icono y el texto */
+        }
+        /* Animación para los iconos de enfoque */
+        .approach-icon-container {
+            transition: transform 0.3s ease-in-out;
+        }
+        .approach-icon-container:hover {
+            transform: scale(1.1); /* Escalar un 10% al pasar el ratón */
+        }
+
+        /* Animaciones activadas por desplazamiento */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Botón "Volver arriba" */
+        #backToTopBtn {
+            display: none; /* Oculto por defecto */
+            position: fixed; /* Posición fija */
+            bottom: 20px;
+            left: 20px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: var(--back-to-top-bg);
+            color: white;
+            cursor: pointer;
+            padding: 8px 10px;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        #backToTopBtn:hover {
+            background-color: var(--back-to-top-hover-bg);
+            transform: scale(1.05);
+        }
+
+        /* Keyframe para la animación de aparición del título principal */
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .main-title-animation {
+            animation: fadeInSlideUp 1s ease-out forwards;
+        }
+
+        /* Estilos de la sección del Plan Detallado */
+        /* REMOVED: #detailed-plan-section specific styles for collapsible behavior */
+
+        /* Animación para el contenido dentro del plan detallado */
+        .detailed-plan-content > * {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transition-delay: 0.3s; /* Retraso para que el contenido aparezca después de que la sección se expanda */
+        }
+
+        /* REMOVED: #detailed-plan-section.is-visible .detailed-plan-content > * */
+
+        /* Estilos para las tarjetas de fase dentro del plan detallado */
+        .phase-card {
+            background-color: var(--card-bg);
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-xl */
+            padding: 2rem; /* p-8 */
+            margin-bottom: 2rem; /* mb-8 */
+            border: 1px solid var(--card-border);
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .phase-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .timeline-card h3 {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: var(--heading-color);
+            margin-bottom: 1rem; /* mb-4 */
+        }
+
+        .timeline-card h3 svg {
+            margin-right: 0.75rem; /* mr-3 */
+            min-width: 32px; /* Ensure icon doesn't shrink */
+            min-height: 32px; /* Ensure icon doesn't shrink */
+        }
+
+        .phase-card ul {
+            list-style: none; /* Remove default bullet */
+            padding-left: 0;
+        }
+
+        .phase-card ul li {
+            position: relative;
+            padding-left: 1.75rem; /* Space for custom bullet */
+            margin-bottom: 0.75rem; /* mb-3 */
+            color: var(--dark-gray-text);
+            line-height: 1.6; /* Improved line height for list items */
+        }
+
+        .phase-card ul li:last-child {
+            margin-bottom: 0;
+        }
+
+        .phase-card ul li::before {
+            content: '✓'; /* Custom bullet point */
+            color: var(--primary-blue);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.25rem;
+            top: 0.15em; /* Adjusted for better vertical alignment */
+        }
+
+        /* Responsive Timeline Specific Styles */
+        .timeline-line {
+            position: absolute;
+            left: 20px; /* Aligned to the left for mobile */
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--timeline-line-color);
+            display: block; /* Always visible */
+            height: 0; /* Start hidden for animation */
+            transition: height 1.5s ease-out; /* Animation for height */
+        }
+
+        .timeline-line.is-visible {
+            height: 100%; /* Animate to full height */
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 4rem; /* Space for the circle and line */
+            opacity: 0; /* Start hidden for animation */
+            transform: translateY(20px); /* Start slightly below for slide-up effect */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Animation for fade and slide */
+        }
+
+        .timeline-item.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Updated timeline-card styles to match phase-card more closely */
+        .timeline-card {
+            background-color: var(--card-bg);
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-xl */
+            padding: 2rem; /* p-8 */
+            border: 1px solid var(--card-border);
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, background-color 0.3s ease, border-color 0.3s ease;
+            position: relative; /* Needed for absolute positioning of eye button */
+        }
+
+        .timeline-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .timeline-card h3 {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: var(--dark-blue); /* darkBlue */
+            margin-bottom: 0.5rem; /* mb-2 */
+            word-break: break-word; /* Allow long words to break */
+            overflow-wrap: break-word; /* Ensure text wraps within the container */
+        }
+
+        .timeline-card p {
+            font-size: 1rem; /* Default paragraph size for timeline cards */
+            line-height: 1.7; /* Adjusted line height for better readability */
+            margin-bottom: 0.5rem; /* Smaller margin for tighter text blocks */
+            color: var(--dark-gray-text);
+        }
+
+        .timeline-card p:last-child {
+            margin-bottom: 0; /* No bottom margin for the last paragraph */
+        }
+
+        .timeline-circle {
+            position: absolute;
+            left: 10px; /* Aligned with the line */
+            top: 0.5rem; /* Adjust to center vertically with card */
+            width: 24px;
+            height: 24px;
+            background-color: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.875rem; /* text-sm */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        /* Eye button styling */
+        .eye-button {
+            position: absolute;
+            top: 0.75rem; /* Adjusted for smaller size */
+            background-color: transparent; /* No background color */
+            color: var(--dark-blue); /* Dark blue for the icon */
+            border-radius: 50%;
+            width: 28px; /* Medium size */
+            height: 28px; /* Medium size */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: none; /* No shadow */
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .eye-button:hover {
+            color: var(--primary-blue);
+            transform: scale(1.1);
+        }
+        .eye-button svg {
+            width: 18px; /* Medium SVG icon */
+            height: 18px; /* Medium SVG icon */
+            stroke: currentColor;
+        }
+
+        /* Default for odd children (Phase 0, Phase 2): Right side */
+        .timeline-item:nth-child(odd) .eye-button {
+            right: 0.75rem;
+            left: auto;
+        }
+
+        /* Default for even children (Phase 1, Phase 3): Left side */
+        .timeline-item:nth-child(even) .eye-button {
+            left: 0.75rem;
+            right: auto;
+        }
+
+        /* Specific styling for duration text */
+        .timeline-card .duration-text {
+            font-style: italic;
+            color: var(--light-gray-text);
+            margin-bottom: 1rem; /* More space before the main description */
+        }
+
+        /* FAQ Accordion Styles */
+        .accordion-item {
+            border-bottom: 1px solid var(--card-border);
+            background-color: var(--card-bg);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--heading-color);
+            transition: background-color 0.2s ease;
+        }
+        .accordion-header:hover {
+            background-color: var(--dropdown-hover-bg);
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            padding: 0 1.5rem;
+            color: var(--dark-gray-text);
+        }
+        .accordion-content.active {
+            max-height: 500px; /* Sufficiently large to show content */
+            padding-bottom: 1.5rem;
+        }
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        .accordion-icon.rotate {
+            transform: rotate(180deg);
+        }
+
+        /* ROI Calculator specific styles */
+        .roi-input {
+            background-color: var(--input-bg);
+            border-color: var(--input-border);
+            color: var(--input-text);
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+        .roi-button {
+            background-color: var(--primary-blue);
+            color: white;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .roi-button:hover {
+            background-color: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .roi-result-display {
+            color: var(--heading-color);
+            transition: color 0.3s ease;
+        }
+
+        /* Styles for detailed phase titles with icons */
+        .detailed-phase-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 700; /* font-bold */
+            color: var(--heading-color);
+            margin-bottom: 1.5rem;
+        }
+        .detailed-phase-title svg {
+            margin-right: 0.75rem; /* mr-3 */
+            min-width: 36px; /* Larger icon */
+            min-height: 36px; /* Larger icon */
+            stroke: var(--primary-blue); /* Icon color */
+        }
+
+        /* Styles for checkmark list items */
+        .detailed-list-item {
+            position: relative;
+            padding-left: 2rem; /* Space for custom checkmark */
+            margin-bottom: 0.75rem; /* mb-3 */
+            color: var(--dark-gray-text);
+            line-height: 1.6;
+        }
+        .detailed-list-item:last-child {
+            margin-bottom: 0;
+        }
+        .detailed-list-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.25em; /* Adjust for vertical alignment */
+            width: 1.25rem; /* Checkmark icon size */
+            height: 1.25rem; /* Checkmark icon size */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2301BAEF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+
+        @media (min-width: 768px) { /* md breakpoint */
+            .timeline-line {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .timeline-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start; /* Align items to the top */
+                padding-left: 0; /* Reset padding for two-column layout */
+            }
+
+            .timeline-item:nth-child(odd) .timeline-card {
+                margin-right: calc(50% + 20px); /* Adjust for circle width and spacing */
+                text-align: right;
+            }
+
+            .timeline-item:nth-child(even) .timeline-card {
+                margin-left: calc(50% + 20px); /* Adjust for circle width and spacing */
+                text-align: left;
+            }
+
+            .timeline-circle {
+                left: 50%;
+                transform: translateX(-50%);
+                top: 0.5rem; /* Re-adjust for card top */
+            }
+
+            .timeline-item .timeline-card {
+                width: calc(50% - 40px); /* Half width minus circle and padding */
+            }
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.is-open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            max-width: 90%;
+            max-height: 90vh; /* Allow content to scroll if it's too long */
+            overflow-y: auto; /* Enable scrolling for modal content */
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+        }
+
+        .modal-overlay.is-open .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .modal-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-gray-text);
+            transition: color 0.3s ease;
+        }
+
+        .modal-close-button:hover {
+            color: var(--primary-blue);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Barra de Navegación Superior -->
+    <nav class="bg-[#0B4F6C]/80 backdrop-blur-lg w-full z-50 shadow-md">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Texto del Logo Orbita® -->
+            <div class="flex-shrink-0">
+                <span class="text-white text-2xl font-extrabold">Orbita®</span>
+            </div>
+            <!-- Menú Desplegable de Contacto (Parte superior derecha) -->
+            <div class="flex items-center space-x-2"> <!-- Reduced space-x from 4 to 2 -->
+                <div class="relative">
+                    <div id="contactDropdown" class="contact-dropdown inline-block relative">
+                        <button id="contactButton" class="text-white hover:text-sky-300 font-bold py-2 px-3 rounded-lg inline-flex items-center transition-colors duration-300"> <!-- Reduced px from 4 to 3 -->
+                            <span>Contacto</span>
+                        </button>
+                        <div id="contactDropdownMenu" class="contact-dropdown-menu">
+                            <a href="https://wa.me/5491165641807?text=Hola%20quiero%20mas%20información%20sobre%20su%20servicio%20de%20Consultoría%20Comercial" target="_blank" class="block py-2 px-4 whitespace-no-wrap">
+                                <span>💬</span> WhatsApp
+                            </a>
+                            <a href="mailto:nicoocarto@gmail.com?subject=Hola%20quiero%20mas%20información%20sobre%20su%20servicio%20de%20Consultoría%20Comercial" class="block py-2 px-4 whitespace-no-wrap">
+                                <span>📧</span> Mail
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <button id="darkModeToggle" class="p-2 rounded-full text-white hover:bg-gray-700 transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon">
+                        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-12 md:py-20">
+
+        <!-- Sección de Encabezado (Título Principal) -->
+        <header class="text-center mb-16 md:mb-24">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 main-title-animation">
+                Plan de Consultoria Comercial
+            </h1>
+            <p class="max-w-3xl mx-auto text-base sm:text-lg md:text-xl main-title-animation" style="animation-delay: 0.2s;">Plan de trabajo diseñado para transformar procesos y maximizar ventas.</p>
+        </header>
+
+        <!-- Sección de la Línea de Tiempo -->
+        <main>
+            <div class="relative wrap overflow-hidden p-10 h-full">
+                <!-- Vertical Line -->
+                <div class="timeline-line"></div>
+
+                <!-- Phase 0 -->
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-circle">0</div>
+                    <div class="timeline-card">
+                        <button class="eye-button" data-target-phase="0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye">
+                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                        <h3 class="font-bold text-xl mb-2">Diagnóstico</h3>
+                        <p class="duration-text text-sm leading-snug tracking-wide">Duración: 4 Meets de 2hs</p>
+                    </div>
+                </div>
+
+                <!-- Phase 1 -->
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-circle">1</div>
+                    <div class="timeline-card">
+                        <button class="eye-button" data-target-phase="1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye">
+                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                        <h3 class="font-bold text-xl mb-2">Diseño Estratégico</h3>
+                        <p class="duration-text text-sm leading-snug tracking-wide">Duración: 2 Meses</p>
+                    </div>
+                </div>
+
+                <!-- Phase 2 -->
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-circle">2</div>
+                    <div class="timeline-card">
+                        <button class="eye-button" data-target-phase="2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye">
+                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                        <h3 class="font-bold text-xl mb-2">Implementación</h3>
+                        <p class="duration-text text-sm leading-snug tracking-wide">Duración: 2 Meses</p>
+                    </div>
+                </div>
+
+                <!-- Phase 3 -->
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-circle">
+                        <!-- Icono de Reciclaje (SVG personalizado) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12V7H3v5a9 9 0 0 0 18 0Z"/>
+                            <path d="M12 22V7"/>
+                            <path d="M17 12H7"/>
+                        </svg>
+                    </div>
+                    <div class="timeline-card">
+                        <button class="eye-button" data-target-phase="3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye">
+                                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                        <h3 class="font-bold text-xl mb-2">Optimización Continua</h3>
+                        <p class="duration-text text-sm leading-snug tracking-wide">Duración: Indefinida</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Botón "Ver Plan Detallado" -->
+            <div class="text-center mt-12">
+                <button id="showDetailedPlanBtn" class="inline-flex items-center justify-center p-3 rounded-lg font-bold text-white transition-transform duration-300 hover:scale-105" style="background-color: var(--primary-blue);">
+                    Ver Plan Detallado
+                </button>
+            </div>
+        </main>
+
+        <!-- Sección de Datos y Resultados -->
+        <section class="mt-16 md:mt-24 animate-on-scroll" id="data-results-section">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-extrabold">Datos y Resultados</h2>
+                <p class="max-w-2xl mx-auto text-lg mt-3">Estos son ejemplos de los reportes y análisis que construiremos para proporcionar una visión clara y accionable de su negocio.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-start">
+                
+                <div class="bg-white p-6 rounded-lg shadow-xl border border-gray-100">
+                    <h3 class="font-bold text-xl mb-1 text-center">Análisis de Facturación por Producto</h3>
+                    <p class="text-center text-sm text-gray-600 mb-4">Identificamos qué productos impulsan mayores ganancias para enfocar los esfuerzos comerciales de manera efectiva.</p>
+                    <div class="chart-container flex items-center justify-center">
+                        <canvas id="rentabilidadChart"></canvas>
+                        <div id="rentabilidadSpinner" class="spinner absolute"></div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-xl border border-gray-100">
+                    <h3 class="font-bold text-xl mb-1 text-center">Distribución de Facturación</h3>
+                    <p class="text-center text-sm text-gray-600 mb-4">Comprenda la contribución de cada unidad de negocio a los ingresos totales para una mejor asignación de recursos.</p>
+                    <div class="chart-container flex items-center justify-center">
+                        <canvas id="facturacionChart"></canvas>
+                        <div id="facturacionSpinner" class="spinner absolute"></div>
+                    </div>
+                </div>
+
+                <!-- Gráfico de Proyección de Crecimiento de Ventas -->
+                <div class="bg-white p-6 rounded-lg shadow-xl border border-gray-100">
+                    <h3 class="font-bold text-xl mb-1 text-center">Proyección de Crecimiento de Ventas</h3>
+                    <p class="text-center text-sm text-gray-600 mb-4">Basado en la implementación de la nueva estrategia, proyectamos el impacto potencial en la facturación trimestral.</p>
+                    <div class="chart-container flex flex-col items-center justify-center">
+                        <canvas id="proyeccionChart" class="mb-4"></canvas>
+                        <div id="proyeccionSpinner" class="spinner absolute"></div>
+                    </div>
+                </div>
+
+                <!-- Nuevo Gráfico: Calendario comercial -->
+                <div class="bg-white p-6 rounded-lg shadow-xl border border-gray-100">
+                    <h3 class="font-bold text-xl mb-1 text-center">Calendario comercial</h3>
+                    <p class="text-center text-sm text-gray-600 mb-4">Identificación de los períodos con mayor volumen de facturación.</p>
+                    <div class="chart-container flex flex-col items-center justify-center">
+                        <canvas id="bestMonthsChart" class="mb-4"></canvas>
+                        <div id="bestMonthsSpinner" class="spinner absolute"></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Sección Nuestro Enfoque -->
+        <section class="mt-20 md:mt-32 animate-on-scroll">
+             <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-extrabold">Nuestro Enfoque de Valor</h2>
+                <p class="max-w-2xl mx-auto text-lg mt-3">Nuestra metodología se basa en pilares fundamentales que garantizan el éxito del proyecto.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center p-6 rounded-lg shadow-lg border border-gray-100" style="background-color: var(--card-bg); border-color: var(--card-border);">
+                    <div class="text-5xl mb-4 approach-icon-container" style="color: var(--primary-blue);">
+                        <!-- Icono de Objetivo (SVG personalizado) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search">
+                            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">Estratégico y Holístico</h4>
+                    <p class="text-gray-600">Diseñamos una estrategia integral, no solo implementamos herramientas.</p>
+                </div>
+                <div class="text-center p-6 rounded-lg shadow-lg border border-gray-100" style="background-color: var(--card-bg); border-color: var(--card-border);">
+                    <div class="text-5xl mb-4 approach-icon-container" style="color: var(--primary-blue);">
+                        <!-- Icono de Tendencia al alza (SVG personalizado) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lightbulb">
+                            <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2v2"/><path d="M12 14v8"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/>
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">Orientado a Resultados</h4>
+                    <p class="text-gray-600">Nos enfocamos en KPIs medibles que impactan directamente en su rentabilidad.</p>
+                </div>
+                <div class="text-center p-6 rounded-lg shadow-lg border border-gray-100" style="background-color: var(--card-bg); border-color: var(--card-border);">
+                    <div class="text-5xl mb-4 approach-icon-container" style="color: var(--primary-blue);">
+                        <!-- Icono de Apretón de manos (SVG personalizado) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-handshake">
+                            <path d="M15.5 17.5l-3 3c-1.1 1.1-3 1.1-4.1 0l-4.1-4.1c-1.1-1.1-1.1-3 0-4.1l3-3c1.1-1.1 3-1.1 4.1 0l4.1 4.1c1.1 1.1 1.1 3 0 4.1z"/><path d="M8.5 6.5l3-3c1.1-1.1 3-1.1 4.1 0l4.1 4.1c1.1 1.1 1.1 3 0 4.1l-3 3"/><path d="M16 8l-4 4"/><path d="M12 12l-4 4"/>
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">Colaboración Activa</h4>
+                    <p class="text-gray-600">Trabajamos como un socio estratégico, no como un simple proveedor.</p>
+                </div>
+                <div class="text-center p-6 rounded-lg shadow-lg border border-gray-100" style="background-color: var(--card-bg); border-color: var(--card-border);">
+                    <div class="text-5xl mb-4 approach-icon-container" style="color: var(--primary-blue);">
+                        <!-- Icono de Adaptabilidad y Mejora (SVG personalizado, más complejo) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 20V10"/>
+                            <path d="M18 20V4"/>
+                            <path d="M6 20v-4"/>
+                            <path d="M12 10h8"/>
+                            <path d="M6 16h12"/>
+                        </svg>
+                    </div>
+                    <h4 class="text-xl font-bold mb-2">Adaptabilidad y Mejora</h4>
+                    <p class="text-gray-600">Nuestro plan es flexible y se optimiza de forma continua.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- REMOVED: Section detailed-plan-section (moved to modal) -->
+
+        <!-- Sección de Preguntas Frecuentes (FAQ) -->
+        <section class="mt-20 md:mt-32 animate-on-scroll" id="faq-section">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-extrabold">Preguntas Frecuentes</h2>
+                <p class="max-w-2xl mx-auto text-lg mt-3">Encuentre respuestas a las preguntas más comunes sobre nuestra consultoría.</p>
+            </div>
+            <div class="max-w-3xl mx-auto">
+                <div class="accordion-item rounded-lg shadow-md mb-4">
+                    <div class="accordion-header" data-accordion="faq1">
+                        ¿Cuánto tiempo dura el proyecto completo?
+                        <svg class="accordion-icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="accordion-content" id="faq1-content">
+                        <p class="py-4">La duración de las fases iniciales (Diagnóstico, Diseño e Implementación) es de aproximadamente 6 meses. La fase de Optimización Continua es un servicio continuo adaptado a sus necesidades.</p>
+                    </div>
+                </div>
+                <div class="accordion-item rounded-lg shadow-md mb-4">
+                    <div class="accordion-header" data-accordion="faq2">
+                        ¿Qué tipo de empresas se benefician más de su consultoría?
+                        <svg class="accordion-icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="accordion-content" id="faq2-content">
+                        <p class="py-4">Nuestra consultoría está diseñada para empresas de diversos tamaños y sectores que buscan optimizar sus procesos comerciales, aumentar la facturación y mejorar la rentabilidad a través de estrategias personalizadas e implementación de tecnología.</p>
+                    </div>
+                </div>
+                <div class="accordion-item rounded-lg shadow-md mb-4">
+                    <div class="accordion-header" data-accordion="faq3">
+                        ¿Qué es Kommo y por qué lo utilizan?
+                        <svg class="accordion-icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="accordion-content" id="faq3-content">
+                        <p class="py-4">Kommo es un CRM (Customer Relationship Management) diseñado para la gestión de ventas y comunicación con clientes. Lo utilizamos por su flexibilidad, facilidad de uso y potentes herramientas de automatización que se adaptan a las necesidades de pequeñas y medianas empresas.</p>
+                    </div>
+                </div>
+                <div class="accordion-item rounded-lg shadow-md mb-4">
+                    <div class="accordion-header" data-accordion="faq4">
+                        ¿Cómo se mide el éxito del proyecto?
+                        <svg class="accordion-icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="accordion-content" id="faq4-content">
+                        <p class="py-4">El éxito se mide a través del monitoreo constante de los KPIs definidos en la Fase Uno, como el aumento de la facturación, la mejora en la tasa de conversión, la eficiencia de los procesos y la satisfacción del equipo comercial.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Próximos Pasos -->
+        <footer class="mt-20 md:mt-32 text-center border-t pt-12 border-gray-200">
+            <h2 class="text-3xl font-bold">Próximos Pasos</h2>
+            <p class="text-lg mt-3 mb-8">Para dar inicio a este proyecto agende una reunión.</p>
+            <div class="inline-flex items-center justify-center p-1 rounded-lg" style="background-color: var(--primary-blue);">
+                 <a id="scheduleMeetingBtn" href="#" class="block text-white font-bold py-3 px-8 rounded-md transition-transform duration-300 hover:scale-105" style="background-color: var(--dark-blue);">Agendar Reunión de Inicio</a>
+            </div>
+             <p class="text-sm text-gray-500 mt-4">Al hacer clic, se abrirá Google Calendar con los detalles de la reunión.</p>
+
+            <!-- Orbita® 2025 en el Pie de Página -->
+            <p class="text-lg mb-2 mt-16 pt-8 border-t border-gray-200">Orbita® 2025</p>
+        </footer>
+
+    </div>
+
+    <!-- Botón Flotante de WhatsApp -->
+    <a href="https://wa.me/5491165641807?text=Hola%20quiero%20mas%20información%20sobre%20su%20servicio%20de%20Consultoría%20Comercial" target="_blank" class="whatsapp-float-button">
+        <!-- Icono de Smartphone Minimalista (SVG personalizado con menos curvas) -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+            <line x1="12" y1="18" x2="12" y2="18"/>
+        </svg>
+    </a>
+
+    <!-- Botón "Volver arriba" -->
+    <button onclick="topFunction()" id="backToTopBtn" title="Volver arriba">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up">
+            <path d="m5 12 7-7 7 7"/>
+            <path d="M12 19V5"/>
+        </svg>
+    </button>
+
+    <!-- Detailed Plan Modal -->
+    <div id="detailedPlanModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button" id="closeModalBtn">&times;</button>
+            <h2 class="text-3xl font-extrabold mb-8 text-center" style="color: var(--heading-color);">Plan Detallado</h2>
+
+            <div id="detailed-phase-0" class="mb-12 phase-card">
+                <h3 class="detailed-phase-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search">
+                        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+                    </svg>
+                    Diagnóstico y Recopilación de Información
+                </h3>
+                <p class="mb-2"><strong>Objetivo:</strong> Obtener una comprensión profunda de la situación actual de sus procesos comerciales y su rendimiento financiero.</p>
+                <p class="mb-4"><strong>Duración Estimada:</strong> 4 Meets de 2hs</p>
+
+                <h4 class="text-xl font-semibold mb-4">Entregables Clave:</h4>
+                <ul>
+                    <li class="detailed-list-item">Análisis de Facturación Detallado (por producto, unidad de negocio).</li>
+                    <li class="detailed-list-item">Reporte de Objetivos y Proyecciones.</li>
+                    <li class="detailed-list-item">Evaluación de Calendario Comercial y Promociones.</li>
+                    <li class="detailed-list-item">Análisis de Precios y Rentabilidad.</li>
+                    <li class="detailed-list-item">Diagnóstico de Herramientas Tecnológicas Comerciales.</li>
+                </ul>
+            </div>
+
+            <div id="detailed-phase-1" class="mb-12 phase-card">
+                <h3 class="detailed-phase-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lightbulb">
+                        <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2v2"/><path d="M12 14v8"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/>
+                    </svg>
+                    Diseño Estratégico Comercial
+                </h3>
+                <p class="mb-2"><strong>Objetivo:</strong> Desarrollar un plan comercial inteligente y adaptado a las necesidades y objetivos, sentando las bases para el crecimiento.</p>
+                <p class="mb-4"><strong>Duración Estimada:</strong> 2 meses</p>
+
+                <h4 class="text-xl font-semibold mb-4">Entregables Clave:</h4>
+                <ul>
+                    <li class="detailed-list-item">Definición de (PxQ).</li>
+                    <li class="detailed-list-item">Optimización de Portafolio de Servicios y Productos.</li>
+                    <li class="detailed-list-item">Estrategia de Pricing Competitiva.</li>
+                    <li class="detailed-list-item">Establecimiento de KPIs y Objetivos Comerciales 2025.</li>
+                    <li class="detailed-list-item">Análisis profundo de la facturacion por producto/servicio para optimizar el enfoque.</li>
+                    <li class="detailed-list-item">Diseño de Ofertas de Valor y "Hooks" de Venta.</li>
+                    <li class="detailed-list-item">Mapeo del Customer Journey.</li>
+                </ul>
+            </div>
+
+            <div id="detailed-phase-2" class="mb-12 phase-card">
+                <h3 class="detailed-phase-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings">
+                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.04.02a2 2 0 0 1 .97 1.43v.51a2 2 0 0 1-.97 1.43l-.04.02a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.04-.02a2 2 0 0 1-.97-1.43v-.51a2 2 0 0 1 .97-1.43l-.04-.02a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    Implementación y Buenas Prácticas
+                </h3>
+                <p class="mb-2"><strong>Objetivo:</strong> Poner en marcha las estrategias diseñadas, implementando herramientas y procesos que optimicen la gestión comercial diaria y la facturación.</p>
+                <p class="mb-4"><strong>Duración Estimada:</strong> 2 meses</p>
+
+                <h4 class="text-xl font-semibold mb-4">Entregables Clave:</h4>
+                <ul>
+                    <li class="detailed-list-item">Configuración y Personalización de CRM (Kommo) [Nivel Inicial].</li>
+                    <li class="detailed-list-item">Diseño y Estructuración de Canales y Embudo de Ventas.</li>
+                    <li class="detailed-list-item">Integración de Kommo con Herramientas Clave.</li>
+                    <li class="detailed-list-item">Planillas de Seguimiento de Ventas y Dashboards.</li>
+                    <li class="detailed-list-item">Materiales de Apoyo a la Venta (presentaciones, plantillas).</li>
+                    <li class="detailed-list-item">Capacitación del Equipo Comercial.</li>
+                </ul>
+            </div>
+
+            <div id="detailed-phase-3" class="mb-12 phase-card">
+                <h3 class="detailed-phase-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up">
+                        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                        <polyline points="16 7 22 7 22 13"/>
+                    </svg>
+                    Iteración y Optimización Continua
+                </h3>
+                <p class="mb-2"><strong>Objetivo:</strong> Asegurar la mejora continua de los procesos comerciales y la adaptación a las dinámicas del mercado para sostener el crecimiento a largo plazo.</p>
+                <p class="mb-4"><strong>Duración Estimada:</strong> Indefinida</p>
+
+                <h4 class="text-xl font-semibold mb-4">Entregables Clave:</h4>
+                <ul>
+                    <li class="detailed-list-item">Monitoreo Constante de KPIs y Resultados.</li>
+                    <li class="detailed-list-item">Recopilación de Feedback del Equipo y Clientes.</li>
+                    <li class="detailed-list-item">Implementación de Pruebas A/B y Ajustes.</li>
+                    <li class="detailed-list-item">Informes de Optimización Periódicos.</li>
+                </ul>
+            </div>
+            <div class="text-center mt-8">
+                <button id="closeModalBtnBottom" class="inline-flex items-center justify-center p-3 rounded-lg font-bold text-white transition-transform duration-300 hover:scale-105" style="background-color: var(--dark-blue);">
+                    Cerrar Plan Detallado
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const body = document.body;
+
+            darkModeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                // Save preference to localStorage
+                if (body.classList.contains('dark-mode')) {
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+
+            // Apply saved theme on load
+            if (localStorage.getItem('theme') === 'dark') {
+                body.classList.add('dark-mode');
+            }
+
+            const brilliantBlues = {
+                darkBlue: '#0B4F6C',
+                lightBlue: '#01BAEF',
+                white: '#FBFBFF',
+                black: '#040F16',
+                gray: '#757575'
+            };
+
+            const tooltipConfig = {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                  return label.join(' ');
+                                } else {
+                                  return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            
+            const processLabel = (label) => {
+                if (label.length > 16) {
+                    const words = label.split(' ');
+                    const lines = [];
+                    let currentLine = '';
+                    words.forEach(word => {
+                        if ((currentLine + ' ' + word).length > 16) {
+                            lines.push(currentLine);
+                            currentLine = word;
+                        } else {
+                            currentLine += (currentLine ? ' ' : '') + word;
+                        }
+                    });
+                    lines.push(currentLine);
+                    return lines;
+                }
+                return label;
+            };
+
+            // Opciones de animación comunes para gráficos
+            const chartAnimationOptions = {
+                duration: 1200, // Duración en milisegundos
+                easing: 'easeInOutQuart', // Función de easing para una animación suave
+            };
+
+            // Variables para almacenar las instancias de los gráficos
+            let rentabilidadChartInstance = null;
+            let facturacionChartInstance = null;
+            let proyeccionChartInstance = null;
+            let bestMonthsChartInstance = null; // Nueva instancia para el gráfico de mejores meses
+
+            // Función para inicializar todos los gráficos
+            const initializeAllCharts = () => {
+                // Show spinners
+                document.getElementById('rentabilidadSpinner').style.display = 'block';
+                document.getElementById('facturacionSpinner').style.display = 'block';
+                document.getElementById('proyeccionSpinner').style.display = 'block';
+                document.getElementById('bestMonthsSpinner').style.display = 'block'; // Mostrar spinner para el nuevo gráfico
+
+                setTimeout(() => { // Simulate loading time
+                    document.getElementById('rentabilidadSpinner').style.display = 'none';
+                    document.getElementById('facturacionSpinner').style.display = 'none';
+                    document.getElementById('proyeccionSpinner').style.display = 'none';
+                    document.getElementById('bestMonthsSpinner').style.display = 'none'; // Ocultar spinner para el nuevo gráfico
+
+                    // If charts are already initialized, destroy them to re-create
+                    if (rentabilidadChartInstance) rentabilidadChartInstance.destroy();
+                    if (facturacionChartInstance) facturacionChartInstance.destroy();
+                    if (proyeccionChartInstance) proyeccionChartInstance.destroy(); 
+                    if (bestMonthsChartInstance) bestMonthsChartInstance.destroy(); // Destruir instancia del nuevo gráfico
+
+                    // Gráfico de Rentabilidad
+                    const rentabilidadCtx = document.getElementById('rentabilidadChart');
+                    if(rentabilidadCtx) {
+                        rentabilidadChartInstance = new Chart(rentabilidadCtx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Producto A', 'Producto B', 'Producto C', 'Producto D', 'Producto E'].map(processLabel),
+                                datasets: [{
+                                    label: 'Rentabilidad',
+                                    data: [65, 45, 58, 38, 72],
+                                    backgroundColor: 'rgba(1, 186, 239, 0.7)',
+                                    borderColor: 'rgba(1, 186, 239, 1)',
+                                    borderWidth: 2,
+                                    borderRadius: 5,
+                                }]
+                            },
+                            options: { 
+                                ...tooltipConfig, 
+                                responsive: true, 
+                                maintainAspectRatio: false, 
+                                scales: { y: { beginAtZero: true } }, 
+                                plugins: { ...tooltipConfig.plugins, legend: { display: false } },
+                                animation: chartAnimationOptions 
+                            }
+                        });
+                    }
+
+                    // Gráfico de Facturación
+                    const facturacionCtx = document.getElementById('facturacionChart');
+                    if(facturacionCtx) {
+                        facturacionChartInstance = new Chart(facturacionCtx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ['Nuevos Clientes', 'Clientes Recurrentes', 'Venta de Productos'],
+                                datasets: [{
+                                    label: 'Facturación',
+                                    data: [45, 35, 20],
+                                    backgroundColor: [
+                                        'rgba(1, 186, 239, 0.8)',
+                                        'rgba(11, 79, 108, 0.8)',
+                                        'rgba(117, 117, 117, 0.7)'
+                                    ],
+                                    borderColor: brilliantBlues.white,
+                                    borderWidth: 4,
+                                }]
+                            },
+                            options: { 
+                                ...tooltipConfig, 
+                                responsive: true, 
+                                maintainAspectRatio: false, 
+                                plugins: { ...tooltipConfig.plugins, legend: { position: 'bottom' } },
+                                animation: chartAnimationOptions 
+                            }
+                        });
+                    }
+
+                    // Gráfico de Proyección (without slider adjustment)
+                    const proyeccionCtx = document.getElementById('proyeccionChart');
+                    if(proyeccionCtx) {
+                        const lineLength = 1000;
+                        proyeccionChartInstance = new Chart(proyeccionCtx, {
+                            type: 'line',
+                            data: {
+                                labels: ['Q1', 'Q2', 'Q3 (Inicio Plan)', 'Q4', 'Q1 Sig.', 'Q2 Sig.'],
+                                datasets: [{
+                                    label: 'Facturación Proyectada',
+                                    data: [120, 125, 130, 155, 180, 210], // Fixed data
+                                    fill: true,
+                                    backgroundColor: 'rgba(1, 186, 239, 0.2)',
+                                    borderColor: 'rgba(1, 186, 239, 1)',
+                                    borderWidth: 2,
+                                    tension: 0.4,
+                                    pointBackgroundColor: 'rgba(1, 186, 239, 1)',
+                                    pointBorderColor: brilliantBlues.white,
+                                    pointHoverRadius: 7,
+                                    pointHoverBackgroundColor: brilliantBlues.white,
+                                    pointHoverBorderColor: 'rgba(1, 186, 239, 1)',
+                                    borderDash: [lineLength, lineLength],
+                                    borderDashOffset: lineLength,
+                                }]
+                            },
+                            options: { 
+                                ...tooltipConfig, 
+                                responsive: true, 
+                                maintainAspectRatio: false, 
+                                scales: { y: { beginAtZero: false } }, 
+                                plugins: { ...tooltipConfig.plugins, legend: { display: false } },
+                                animations: {
+                                    borderDashOffset: {
+                                        easing: 'linear',
+                                        from: lineLength,
+                                        to: 0,
+                                        duration: 1500
+                                    }
+                                }
+                            }
+                        });
+                    }
+
+                    // Nuevo Gráfico: Mejores Meses de Facturación
+                    const bestMonthsCtx = document.getElementById('bestMonthsChart');
+                    if(bestMonthsCtx) {
+                        bestMonthsChartInstance = new Chart(bestMonthsCtx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'].map(processLabel),
+                                datasets: [{
+                                    label: 'Facturación Mensual',
+                                    data: [150, 160, 180, 170, 190, 200, 175, 210, 195, 220, 230, 250], // Datos de ejemplo de facturación mensual
+                                    backgroundColor: 'rgba(1, 186, 239, 0.7)', // lightBlue
+                                    borderColor: 'rgba(1, 186, 239, 1)',
+                                    borderWidth: 2,
+                                    borderRadius: 5,
+                                }]
+                            },
+                            options: { 
+                                ...tooltipConfig, 
+                                responsive: true, 
+                                maintainAspectRatio: false, 
+                                scales: { y: { beginAtZero: true } }, 
+                                plugins: { ...tooltipConfig.plugins, legend: { display: false } },
+                                animation: chartAnimationOptions 
+                            }
+                        });
+                    }
+
+                }, 1000); // 1 second delay to show spinner
+            };
+
+            // Generación de Eventos de Google Calendar
+            const scheduleMeetingBtn = document.getElementById('scheduleMeetingBtn');
+            if (scheduleMeetingBtn) {
+                scheduleMeetingBtn.addEventListener('click', (event) => {
+                    event.preventDefault(); // Evitar el comportamiento predeterminado del enlace
+
+                    const title = encodeURIComponent('Reunión de Inicio - Optimización Comercial');
+                    const description = encodeURIComponent('Discusión y planificación de la Fase Cero del proyecto de optimización de procesos y facturación. Por favor, ajuste la fecha y hora a su conveniencia.');
+                    const dates = '20250801T100000/20250801T110000'; // Ejemplo: 1 de agosto de 2025, 10:00 AM a 11:00 AM (AAAAMMDDTHHMMSS)
+                    const guests = encodeURIComponent('matias@oneenter.net,nicoocarto@gmail.com'); // Mantener ambos correos para la invitación al calendario
+                    const location = encodeURIComponent('Reunión Virtual (se enviará enlace)'); // Ejemplo de ubicación
+
+                    const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${description}&dates=${dates}&add=${guests}&location=${location}`;
+                    
+                    window.open(googleCalendarUrl, '_blank');
+                });
+            }
+
+            // Lógica del Menú Desplegable de Contacto
+            const contactDropdown = document.getElementById('contactDropdown');
+            const contactButton = document.getElementById('contactButton');
+            const contactDropdownMenu = document.getElementById('contactDropdownMenu');
+
+            let isDropdownOpenByClick = false;
+
+            // Alternar el desplegable al hacer clic en el botón
+            contactButton.addEventListener('click', (event) => {
+                event.stopPropagation(); // Evitar que el clic se propague al documento
+                isDropdownOpenByClick = !isDropdownOpenByClick;
+                contactDropdownMenu.classList.toggle('is-open', isDropdownOpenByClick);
+            });
+
+            // Cerrar el desplegable si se hace clic fuera y se abrió con un clic
+            document.addEventListener('click', (event) => {
+                if (isDropdownOpenByClick && !contactDropdown.contains(event.target)) {
+                    isDropdownOpenByClick = false;
+                    contactDropdownMenu.classList.remove('is-open');
+                }
+            });
+
+            // Manejar el hover para el desplegable (volver a habilitar si no está abierto por clic)
+            contactDropdown.addEventListener('mouseenter', () => {
+                if (!isDropdownOpenByClick) {
+                    contactDropdownMenu.style.display = 'block';
+                }
+            });
+
+            contactDropdown.addEventListener('mouseleave', () => {
+                if (!isDropdownOpenByClick) {
+                    contactDropdownMenu.style.display = 'none';
+                }
+            });
+
+            // Animaciones activadas por desplazamiento para secciones
+            const animateOnScrollElements = document.querySelectorAll('.animate-on-scroll');
+            const observerOptions = {
+                root: null, // viewport como la raíz
+                rootMargin: '0px',
+                threshold: 0.1 // el 10% del elemento debe ser visible para activarse
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        // Si la sección de "Datos y Resultados" se vuelve visible, inicializar los gráficos
+                        if (entry.target.id === 'data-results-section') {
+                            initializeAllCharts();
+                        }
+                        observer.unobserve(entry.target); // Dejar de observar una vez animado
+                    }
+                });
+            }, observerOptions);
+
+            animateOnScrollElements.forEach(element => {
+                observer.observe(element);
+            });
+
+            // Intersection Observer for the timeline line
+            const timelineWrap = document.querySelector('.wrap.overflow-hidden'); // Select the parent of the timeline line
+            if (timelineWrap) {
+                const timelineLine = timelineWrap.querySelector('.timeline-line');
+                const timelineLineObserverOptions = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.1 // When 10% of the wrap is visible
+                };
+
+                const timelineLineObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            timelineLine.classList.add('is-visible');
+                            observer.unobserve(entry.target); // Stop observing once animated
+                        }
+                    });
+                }, timelineLineObserverOptions);
+
+                timelineLineObserver.observe(timelineWrap);
+            }
+
+            // Lógica del Botón "Volver arriba"
+            const backToTopBtn = document.getElementById("backToTopBtn");
+
+            // Cuando el usuario se desplaza 200px hacia abajo desde la parte superior del documento, mostrar el botón
+            const scrollFunction = () => {
+                if (backToTopBtn) { // Add a check to ensure the element exists
+                    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                        backToTopBtn.style.display = "block";
+                    } else {
+                        backToTopBtn.style.display = "none";
+                    }
+                }
+            };
+            window.onscroll = scrollFunction; // Asignar la función al evento onscroll
+
+            // Cuando el usuario hace clic en el botón, desplazarse a la parte superior del documento
+            const topFunction = () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' }); // Desplazamiento suave
+            };
+            window.topFunction = topFunction; // Asignar la función a la propiedad topFunction del objeto window
+
+            // Modal Logic for Detailed Plan
+            const detailedPlanModal = document.getElementById('detailedPlanModal');
+            const showDetailedPlanBtn = document.getElementById('showDetailedPlanBtn');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const closeModalBtnBottom = document.getElementById('closeModalBtnBottom');
+            const modalContent = detailedPlanModal.querySelector('.modal-content');
+
+            const openModal = () => {
+                detailedPlanModal.classList.add('is-open');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling on the body when modal is open
+            };
+
+            const closeModal = () => {
+                detailedPlanModal.classList.remove('is-open');
+                document.body.style.overflow = ''; // Restore scrolling on the body
+            };
+
+            if (showDetailedPlanBtn) {
+                showDetailedPlanBtn.addEventListener('click', openModal);
+            }
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', closeModal);
+            }
+            if (closeModalBtnBottom) {
+                closeModalBtnBottom.addEventListener('click', closeModal);
+            }
+
+            // Close modal when clicking outside the content
+            detailedPlanModal.addEventListener('click', (event) => {
+                if (event.target === detailedPlanModal) {
+                    closeModal();
+                }
+            });
+
+            // Close modal when pressing Escape key
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && detailedPlanModal.classList.contains('is-open')) {
+                    closeModal();
+                }
+            });
+
+            // Lógica para los botones de ojo en la línea de tiempo
+            const eyeButtons = document.querySelectorAll('.eye-button');
+            eyeButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    const targetPhase = button.dataset.targetPhase;
+                    const targetElementId = `detailed-phase-${targetPhase}`;
+                    const targetElement = document.getElementById(targetElementId);
+
+                    if (targetElement) {
+                        openModal(); // Open the modal first
+                        // Wait for the modal to fully open before scrolling
+                        setTimeout(() => {
+                            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 350); // Match modal transition duration
+                    }
+                });
+            });
+
+            // Lógica del Acordeón de Preguntas Frecuentes
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling; // El contenido es el siguiente hermano
+                    const icon = header.querySelector('.accordion-icon');
+
+                    content.classList.toggle('active');
+                    icon.classList.toggle('rotate');
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
