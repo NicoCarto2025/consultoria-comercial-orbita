@@ -34,6 +34,9 @@
             --input-bg: #ffffff;
             --input-border: #d1d5db;
             --input-text: #1f2937;
+            /* Reverted chart colors for light mode */
+            --chart-grid-color: rgba(203, 213, 225, 0.3);
+            --chart-text-color: #4A5568;
         }
 
         .dark-mode {
@@ -56,6 +59,9 @@
             --input-bg: #333333; /* Fondo de input oscuro */
             --input-border: #555555; /* Borde de input oscuro */
             --input-text: #e0e0e0; /* Texto de input claro */
+            /* Reverted chart colors for dark mode to not explicitly change */
+            --chart-grid-color: rgba(203, 213, 225, 0.3); /* Default light grid color */
+            --chart-text-color: #4A5568; /* Default dark text color */
         }
 
         body {
@@ -76,7 +82,7 @@
             line-height: 1.7; /* Improved line height for readability */
             margin-bottom: 1rem; /* Consistent bottom margin for paragraphs */
             word-break: break-word; /* Ensure paragraphs wrap */
-            overflow-wrap: break-word;
+            overflow-wrap: word-break;
         }
         .chart-container {
             position: relative;
@@ -380,7 +386,40 @@
             font-size: 0.875rem; /* text-sm */
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             z-index: 10;
+            /* Microinteraction: Wave effect on hover/click */
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden; /* Hide overflow for wave effect */
         }
+        .timeline-circle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .timeline-circle::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            opacity: 0;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease-out, height 0.4s ease-out, opacity 0.4s ease-out;
+        }
+        .timeline-circle:active::after {
+            width: 150%;
+            height: 150%;
+            opacity: 1;
+            transition: width 0s, height 0s, opacity 0s; /* Reset for immediate start */
+        }
+        .timeline-circle.wave-active::after {
+            width: 150%;
+            height: 150%;
+            opacity: 0;
+            transition: width 0.4s ease-out, height 0.4s ease-out, opacity 0.4s ease-out;
+        }
+
 
         /* Eye button styling */
         .eye-button {
@@ -401,11 +440,17 @@
         .eye-button:hover {
             color: var(--primary-blue);
             transform: scale(1.1);
+            /* Microinteraction: Subtle blink/pulse */
+            animation: eyePulse 0.8s infinite alternate;
         }
         .eye-button svg {
             width: 18px; /* Medium SVG icon */
             height: 18px; /* Medium SVG icon */
             stroke: currentColor;
+        }
+        @keyframes eyePulse {
+            from { opacity: 1; }
+            to { opacity: 0.8; }
         }
 
         /* All eye buttons to the right */
@@ -488,6 +533,7 @@
         .detailed-phase-title {
             display: flex;
             align-items: center;
+            flex-wrap: wrap; /* Allow wrapping */
             font-size: 1.875rem; /* text-3xl */
             font-weight: 700; /* font-bold */
             color: var(--heading-color);
@@ -498,7 +544,16 @@
             min-width: 36px; /* Larger icon */
             min-height: 36px; /* Larger icon */
             stroke: var(--primary-blue); /* Icon color */
+            flex-shrink: 0; /* Prevent icon from shrinking */
         }
+        /* Added for the text content within the h3 */
+        .detailed-phase-title span {
+            flex-grow: 1; /* Allow text to take available space */
+            flex-shrink: 1; /* Allow text to shrink if needed */
+            word-break: break-word; /* Ensure long words break */
+            overflow-wrap: break-word;
+        }
+
 
         /* Styles for checkmark list items */
         .detailed-list-item {
@@ -616,6 +671,16 @@
             color: var(--primary-blue);
         }
 
+        /* Global styles for chart titles and descriptions */
+        .bg-white.p-6 h3 { /* Chart title */
+            font-size: 1.15rem; /* Consistent with other h3 */
+            color: #000000; /* Fixed black color for chart titles */
+        }
+        .bg-white.p-6 p { /* Chart description */
+            font-size: 0.85rem; /* Consistent with other paragraphs */
+            color: #333333; /* Darker gray for descriptions */
+        }
+
         /* Mobile-specific adjustments */
         @media (max-width: 640px) { /* Tailwind's sm breakpoint */
             h1 {
@@ -703,39 +768,6 @@
             .bg-white.p-6 { /* Chart card padding */
                 padding: 1.25rem; /* Reduced padding for chart cards */
             }
-            .bg-white.p-6 h3 { /* Chart title */
-                font-size: 1.15rem; /* Consistent with other h3 */
-            }
-            .bg-white.p-6 p { /* Chart description */
-                font-size: 0.85rem; /* Consistent with other paragraphs */
-            }
-
-            /* Our Approach Section */
-            .approach-icon-container svg {
-                width: 40px; /* Slightly smaller icons */
-                height: 40px;
-            }
-            .approach-icon-container {
-                font-size: 2.5rem; /* Adjusted font size for icon container */
-            }
-            .text-center.p-6 { /* Approach card padding */
-                padding: 1.25rem;
-            }
-
-            /* FAQ Section */
-            .accordion-header {
-                padding: 0.8rem 1rem; /* Reduced padding for accordion headers */
-                font-size: 0.95rem;
-            }
-            .accordion-content {
-                padding: 0 1rem; /* Reduced padding for accordion content */
-            }
-            .accordion-content.active {
-                padding-bottom: 1rem; /* Adjusted padding */
-            }
-            .accordion-content p {
-                font-size: 0.9rem; /* Smaller text for FAQ answers */
-            }
             /* The following ensures consistent icon size on mobile */
             /* Removed the specific override for accordion-header svg to let .accordion-icon apply */
 
@@ -822,7 +854,7 @@
 
                 <!-- Phase 0 -->
                 <div class="timeline-item animate-on-scroll">
-                    <div class="timeline-circle">0</div>
+                    <div class="timeline-circle" data-phase-id="0">0</div>
                     <div class="timeline-card">
                         <button class="eye-button" data-target-phase="0">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye">
@@ -837,7 +869,7 @@
 
                 <!-- Phase 1 -->
                 <div class="timeline-item animate-on-scroll">
-                    <div class="timeline-circle">1</div>
+                    <div class="timeline-circle" data-phase-id="1">1</div>
                     <div class="timeline-card">
                         <button class="eye-button" data-target-phase="1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye">
@@ -852,7 +884,7 @@
 
                 <!-- Phase 2 -->
                 <div class="timeline-item animate-on-scroll">
-                    <div class="timeline-circle">2</div>
+                    <div class="timeline-circle" data-phase-id="2">2</div>
                     <div class="timeline-card">
                         <button class="eye-button" data-target-phase="2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye">
@@ -867,7 +899,7 @@
 
                 <!-- Phase 3 -->
                 <div class="timeline-item animate-on-scroll">
-                    <div class="timeline-circle">
+                    <div class="timeline-circle" data-phase-id="3">
                         <!-- Icono de Reciclaje (SVG personalizado) -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 12V7H3v5a9 9 0 0 0 18 0Z"/>
@@ -905,8 +937,8 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-start">
                 
                 <div class="bg-white p-6 rounded-lg shadow-xl border border-gray-100">
-                    <h3 class="font-bold text-xl mb-1 text-center">Análisis de Facturación por Producto</h3>
-                    <p class="text-center text-sm text-gray-600 mb-4">Identificamos qué productos impulsan mayores ganancias para enfocar los esfuerzos comerciales de manera efectiva.</p>
+                    <h3 class="font-bold text-xl mb-1 text-center">Análisis de Cantidad de Ventas por Producto</h3>
+                    <p class="text-center text-sm mb-4">Identificamos qué productos impulsan mayores ventas para enfocar los esfuerzos comerciales de manera efectiva.</p>
                     <div class="chart-container flex items-center justify-center">
                         <canvas id="rentabilidadChart"></canvas>
                         <div id="rentabilidadSpinner" class="spinner absolute"></div>
@@ -914,8 +946,8 @@
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow-xl border border-gray-100">
-                    <h3 class="font-bold text-xl mb-1 text-center">Distribución de Facturación</h3>
-                    <p class="text-center text-sm text-gray-600 mb-4">Comprenda la contribución de cada unidad de negocio a los ingresos totales para una mejor asignación de recursos.</p>
+                    <h3 class="font-bold text-xl mb-1 text-center">Distribución de Cantidad de Ventas</h3>
+                    <p class="text-center text-sm mb-4">Comprenda la contribución de cada unidad de negocio a la cantidad de ventas totales para una mejor asignación de recursos.</p>
                     <div class="chart-container flex items-center justify-center">
                         <canvas id="facturacionChart"></canvas>
                         <div id="facturacionSpinner" class="spinner absolute"></div>
@@ -925,17 +957,18 @@
                 <!-- Gráfico de Proyección de Crecimiento de Ventas -->
                 <div class="bg-white p-6 rounded-lg shadow-xl border border-gray-100">
                     <h3 class="font-bold text-xl mb-1 text-center">Proyección de Crecimiento de Ventas</h3>
-                    <p class="text-center text-sm text-gray-600 mb-4">Basado en la implementación de la nueva estrategia, proyectamos el impacto potencial en la facturación trimestral.</p>
+                    <p class="text-center text-sm mb-4">Basado en la implementación de la nueva estrategia, proyectamos el impacto potencial en la cantidad de ventas trimestral.</p>
                     <div class="chart-container flex flex-col items-center justify-center">
                         <canvas id="proyeccionChart" class="mb-4"></canvas>
                         <div id="proyeccionSpinner" class="spinner absolute"></div>
                     </div>
+                    <!-- REMOVED: Slider for dynamic projection -->
                 </div>
 
                 <!-- Nuevo Gráfico: Calendario comercial -->
                 <div class="bg-white p-6 rounded-lg shadow-xl border border-gray-100">
                     <h3 class="font-bold text-xl mb-1 text-center">Calendario comercial</h3>
-                    <p class="text-center text-sm text-gray-600 mb-4">Identificación de los períodos con mayor volumen de facturación.</p>
+                    <p class="text-center text-sm mb-4">Identificación de los períodos con mayor volumen de cantidad de ventas.</p>
                     <div class="chart-container flex flex-col items-center justify-center">
                         <canvas id="bestMonthsChart" class="mb-4"></canvas>
                         <div id="bestMonthsSpinner" class="spinner absolute"></div>
@@ -1014,7 +1047,7 @@
                         <svg class="accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
                     </div>
                     <div class="accordion-content" id="faq1-content">
-                        <p class="py-4">La duración de las fases iniciales (Diagnóstico, Diseño e Implementación) es de aproximadamente 4 meses. La fase de Optimización Continua es un servicio continuo adaptado a sus necesidades.</p>
+                        <p class="py-4">La duración de las fases iniciales (Diagnóstico, Diseño e Implementación) es de aproximadamente 6 meses. La fase de Optimización Continua es un servicio continuo adaptado a sus necesidades.</p>
                     </div>
                 </div>
                 <div class="accordion-item rounded-lg shadow-md mb-4">
@@ -1089,7 +1122,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search">
                         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
                     </svg>
-                    Diagnóstico y Recopilación de Información
+                    <span>Diagnóstico y Recopilación de Información</span>
                 </h3>
                 <p class="mb-2"><strong>Objetivo:</strong> Obtener una comprensión profunda de la situación actual de sus procesos comerciales y su rendimiento financiero.</p>
                 <p class="mb-4"><strong>Duración Estimada:</strong> 4 Meets de 2hs</p>
@@ -1109,7 +1142,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lightbulb">
                         <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2v2"/><path d="M12 14v8"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/>
                     </svg>
-                    Diseño Estratégico Comercial
+                    <span>Diseño Estratégico Comercial</span>
                 </h3>
                 <p class="mb-2"><strong>Objetivo:</strong> Desarrollar un plan comercial inteligente y adaptado a las necesidades y objetivos, sentando las bases para el crecimiento.</p>
                 <p class="mb-4"><strong>Duración Estimada:</strong> 2 meses</p>
@@ -1129,9 +1162,9 @@
             <div id="detailed-phase-2" class="mb-12 phase-card">
                 <h3 class="detailed-phase-title">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings">
-                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.04.02a2 2 0 0 1 .97 1.43v.51a2 2 0 0 1-.97 1.43l-.04.02a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.04-.02a2 2 0 0 1-.97-1.43v-.51a2 2 0 0 1 .97-1.43l-.04-.02a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>
+                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.04.02a2 2 0 0 1 .97 1.43v.51a2 2 0 0 1-.97 1.43l-.04-.02a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.04-.02a2 2 0 0 1-.97-1.43v-.51a2 2 0 0 1 .97-1.43l-.04-.02a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>
                     </svg>
-                    Implementación y Buenas Prácticas
+                    <span>Implementación y Buenas Prácticas</span>
                 </h3>
                 <p class="mb-2"><strong>Objetivo:</strong> Poner en marcha las estrategias diseñadas, implementando herramientas y procesos que optimicen la gestión comercial diaria y la facturación.</p>
                 <p class="mb-4"><strong>Duración Estimada:</strong> 2 meses</p>
@@ -1153,7 +1186,7 @@
                         <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
                         <polyline points="16 7 22 7 22 13"/>
                     </svg>
-                    Iteración y Optimización Continua
+                    <span>Iteración y Optimización Continua</span>
                 </h3>
                 <p class="mb-2"><strong>Objetivo:</strong> Asegurar la mejora continua de los procesos comerciales y la adaptación a las dinámicas del mercado para sostener el crecimiento a largo plazo.</p>
                 <p class="mb-4"><strong>Duración Estimada:</strong> Indefinida</p>
@@ -1188,20 +1221,14 @@
                 } else {
                     localStorage.setItem('theme', 'light');
                 }
+                // Re-initialize charts to apply new theme colors
+                initializeAllCharts();
             });
 
             // Apply saved theme on load
             if (localStorage.getItem('theme') === 'dark') {
                 body.classList.add('dark-mode');
             }
-
-            const brilliantBlues = {
-                darkBlue: '#0B4F6C',
-                lightBlue: '#01BAEF',
-                white: '#FBFBFF',
-                black: '#040F16',
-                gray: '#757575'
-            };
 
             const tooltipConfig = {
                 plugins: {
@@ -1254,23 +1281,28 @@
 
             // Función para inicializar todos los gráficos
             const initializeAllCharts = () => {
-                // Show spinners
+                // Mostrar spinners
                 document.getElementById('rentabilidadSpinner').style.display = 'block';
                 document.getElementById('facturacionSpinner').style.display = 'block';
                 document.getElementById('proyeccionSpinner').style.display = 'block';
                 document.getElementById('bestMonthsSpinner').style.display = 'block'; // Mostrar spinner para el nuevo gráfico
 
-                setTimeout(() => { // Simulate loading time
+                setTimeout(() => { // Simular tiempo de carga
                     document.getElementById('rentabilidadSpinner').style.display = 'none';
                     document.getElementById('facturacionSpinner').style.display = 'none';
                     document.getElementById('proyeccionSpinner').style.display = 'none';
                     document.getElementById('bestMonthsSpinner').style.display = 'none'; // Ocultar spinner para el nuevo gráfico
 
-                    // If charts are already initialized, destroy them to re-create
+                    // Si los gráficos ya están inicializados, destruirlos para volver a crearlos
                     if (rentabilidadChartInstance) rentabilidadChartInstance.destroy();
                     if (facturacionChartInstance) facturacionChartInstance.destroy();
                     if (proyeccionChartInstance) proyeccionChartInstance.destroy(); 
                     if (bestMonthsChartInstance) bestMonthsChartInstance.destroy(); // Destruir instancia del nuevo gráfico
+
+                    // Colores originales o fijos
+                    const primaryBlue = '#01BAEF';
+                    const darkBlue = '#0B4F6C';
+                    const whiteColor = '#FBFBFF'; // Para el borde en el gráfico de dona
 
                     // Gráfico de Rentabilidad
                     const rentabilidadCtx = document.getElementById('rentabilidadChart');
@@ -1280,8 +1312,8 @@
                             data: {
                                 labels: ['Producto A', 'Producto B', 'Producto C', 'Producto D', 'Producto E'].map(processLabel),
                                 datasets: [{
-                                    label: 'Rentabilidad',
-                                    data: [65, 45, 58, 38, 72],
+                                    label: 'Cantidad de Ventas',
+                                    data: [1500, 2200, 1800, 1200, 2800], // Adjusted data for sales quantity
                                     backgroundColor: 'rgba(1, 186, 239, 0.7)',
                                     borderColor: 'rgba(1, 186, 239, 1)',
                                     borderWidth: 2,
@@ -1292,8 +1324,24 @@
                                 ...tooltipConfig, 
                                 responsive: true, 
                                 maintainAspectRatio: false, 
-                                scales: { y: { beginAtZero: true } }, 
-                                plugins: { ...tooltipConfig.plugins, legend: { display: false } },
+                                scales: { 
+                                    y: { 
+                                        beginAtZero: true,
+                                        ticks: { color: Chart.defaults.color },
+                                        grid: { color: Chart.defaults.borderColor }
+                                    },
+                                    x: {
+                                        ticks: { color: Chart.defaults.color },
+                                        grid: { display: false }
+                                    }
+                                }, 
+                                plugins: { 
+                                    ...tooltipConfig.plugins, 
+                                    legend: { 
+                                        display: false,
+                                        labels: { color: Chart.defaults.color }
+                                    }
+                                },
                                 animation: chartAnimationOptions 
                             }
                         });
@@ -1305,16 +1353,16 @@
                         facturacionChartInstance = new Chart(facturacionCtx, {
                             type: 'doughnut',
                             data: {
-                                labels: ['Nuevos Clientes', 'Clientes Recurrentes', 'Venta de Productos'],
+                                labels: ['Nuevos Clientes', 'Clientes Recurrentes', 'Venta de Productos Adicionales'],
                                 datasets: [{
-                                    label: 'Facturación',
-                                    data: [45, 35, 20],
+                                    label: 'Cantidad de Ventas',
+                                    data: [40, 45, 15], // Data represents percentage of sales quantity
                                     backgroundColor: [
                                         'rgba(1, 186, 239, 0.8)',
                                         'rgba(11, 79, 108, 0.8)',
                                         'rgba(117, 117, 117, 0.7)'
                                     ],
-                                    borderColor: brilliantBlues.white,
+                                    borderColor: whiteColor,
                                     borderWidth: 4,
                                 }]
                             },
@@ -1322,54 +1370,76 @@
                                 ...tooltipConfig, 
                                 responsive: true, 
                                 maintainAspectRatio: false, 
-                                plugins: { ...tooltipConfig.plugins, legend: { position: 'bottom' } },
+                                plugins: { 
+                                    ...tooltipConfig.plugins, 
+                                    legend: { 
+                                        position: 'bottom',
+                                        labels: { color: Chart.defaults.color }
+                                    }
+                                },
                                 animation: chartAnimationOptions 
                             }
                         });
                     }
 
-                    // Gráfico de Proyección (without slider adjustment)
+                    // Gráfico de Proyección (revertido a datos estáticos)
                     const proyeccionCtx = document.getElementById('proyeccionChart');
-                    if(proyeccionCtx) {
-                        const lineLength = 1000;
-                        proyeccionChartInstance = new Chart(proyeccionCtx, {
-                            type: 'line',
-                            data: {
-                                labels: ['Q1', 'Q2', 'Q3 (Inicio Plan)', 'Q4', 'Q1 Sig.', 'Q2 Sig.'],
-                                datasets: [{
-                                    label: 'Facturación Proyectada',
-                                    data: [120, 125, 130, 155, 180, 210], // Fixed data
-                                    fill: true,
-                                    backgroundColor: 'rgba(1, 186, 239, 0.2)',
-                                    borderColor: 'rgba(1, 186, 239, 1)',
-                                    borderWidth: 2,
-                                    tension: 0.4,
-                                    pointBackgroundColor: 'rgba(1, 186, 239, 1)',
-                                    pointBorderColor: brilliantBlues.white,
-                                    pointHoverRadius: 7,
-                                    pointHoverBackgroundColor: brilliantBlues.white,
-                                    pointHoverBorderColor: 'rgba(1, 186, 239, 1)',
-                                    borderDash: [lineLength, lineLength],
-                                    borderDashOffset: lineLength,
-                                }]
+                    const lineLength = 1000;
+                    proyeccionChartInstance = new Chart(proyeccionCtx, {
+                        type: 'line',
+                        data: {
+                            labels: ['Q1', 'Q2', 'Q3 (Inicio Plan)', 'Q4', 'Q1 Sig.', 'Q2 Sig.'],
+                            datasets: [{
+                                label: 'Cantidad de Ventas Proyectada',
+                                data: [12000, 12500, 13000, 13800, 14800, 16000], // Adjusted data for more realistic growth
+                                fill: true,
+                                backgroundColor: 'rgba(1, 186, 239, 0.2)',
+                                borderColor: 'rgba(1, 186, 239, 1)',
+                                borderWidth: 2,
+                                tension: 0.4,
+                                pointBackgroundColor: 'rgba(1, 186, 239, 1)',
+                                pointBorderColor: whiteColor,
+                                pointHoverRadius: 7,
+                                pointHoverBackgroundColor: whiteColor,
+                                pointHoverBorderColor: 'rgba(1, 186, 239, 1)',
+                                borderDash: [lineLength, lineLength],
+                                borderDashOffset: lineLength,
+                            }]
+                        },
+                        options: { 
+                            ...tooltipConfig, 
+                            responsive: true, 
+                            maintainAspectRatio: false, 
+                            scales: { 
+                                y: { 
+                                    beginAtZero: false,
+                                    ticks: { color: Chart.defaults.color },
+                                    grid: { color: Chart.defaults.borderColor }
+                                },
+                                x: {
+                                    ticks: { color: Chart.defaults.color },
+                                    grid: { color: Chart.defaults.borderColor }
+                                }
+                            }, 
+                            plugins: { 
+                                ...tooltipConfig.plugins, 
+                                legend: { 
+                                    display: false,
+                                    labels: { color: Chart.defaults.color }
+                                }
                             },
-                            options: { 
-                                ...tooltipConfig, 
-                                responsive: true, 
-                                maintainAspectRatio: false, 
-                                scales: { y: { beginAtZero: false } }, 
-                                plugins: { ...tooltipConfig.plugins, legend: { display: false } },
-                                animations: {
-                                    borderDashOffset: {
-                                        easing: 'linear',
-                                        from: lineLength,
-                                        to: 0,
-                                        duration: 1500
-                                    }
+                            animations: {
+                                borderDashOffset: {
+                                    easing: 'linear',
+                                    from: lineLength,
+                                    to: 0,
+                                    duration: 1500
                                 }
                             }
-                        });
-                    }
+                        }
+                    });
+
+                    // REMOVED: Slider event listener and updateProyeccionChart calls
 
                     // Nuevo Gráfico: Mejores Meses de Facturación
                     const bestMonthsCtx = document.getElementById('bestMonthsChart');
@@ -1379,9 +1449,9 @@
                             data: {
                                 labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'].map(processLabel),
                                 datasets: [{
-                                    label: 'Facturación Mensual',
-                                    data: [150, 160, 180, 170, 190, 200, 175, 210, 195, 220, 230, 250], // Datos de ejemplo de facturación mensual
-                                    backgroundColor: 'rgba(1, 186, 239, 0.7)', // lightBlue
+                                    label: 'Cantidad de Ventas Mensual',
+                                    data: [1500, 1600, 1800, 1700, 1900, 2000, 1750, 2100, 1950, 2200, 2300, 2500], // More realistic data for sales quantity
+                                    backgroundColor: 'rgba(1, 186, 239, 0.7)',
                                     borderColor: 'rgba(1, 186, 239, 1)',
                                     borderWidth: 2,
                                     borderRadius: 5,
@@ -1391,8 +1461,24 @@
                                 ...tooltipConfig, 
                                 responsive: true, 
                                 maintainAspectRatio: false, 
-                                scales: { y: { beginAtZero: true } }, 
-                                plugins: { ...tooltipConfig.plugins, legend: { display: false } },
+                                scales: { 
+                                    y: { 
+                                        beginAtZero: true,
+                                        ticks: { color: Chart.defaults.color },
+                                        grid: { color: Chart.defaults.borderColor }
+                                    },
+                                    x: {
+                                        ticks: { color: Chart.defaults.color },
+                                        grid: { display: false }
+                                    }
+                                }, 
+                                plugins: { 
+                                    ...tooltipConfig.plugins, 
+                                    legend: { 
+                                        display: false,
+                                        labels: { color: Chart.defaults.color }
+                                    }
+                                },
                                 animation: chartAnimationOptions 
                             }
                         });
@@ -1522,12 +1608,12 @@
             };
             window.topFunction = topFunction; // Asignar la función a la propiedad topFunction del objeto window
 
-            // Modal Logic for Detailed Plan
+            // Modal Logic for Detailed Plan (revertido a contenido estático)
             const detailedPlanModal = document.getElementById('detailedPlanModal');
             const showDetailedPlanBtn = document.getElementById('showDetailedPlanBtn');
             const closeModalBtn = document.getElementById('closeModalBtn');
             const closeModalBtnBottom = document.getElementById('closeModalBtnBottom');
-            const modalContent = detailedPlanModal.querySelector('.modal-content');
+            // REMOVED: modalContentContainer and modalContentSpinner as dynamic content is removed
 
             const openModal = () => {
                 detailedPlanModal.classList.add('is-open');
@@ -1563,24 +1649,33 @@
                 }
             });
 
-            // Lógica para los botones de ojo en la línea de tiempo
+            // Lógica para los botones de ojo en la línea de tiempo (revertido a solo abrir el modal)
             const eyeButtons = document.querySelectorAll('.eye-button');
             eyeButtons.forEach(button => {
                 button.addEventListener('click', (event) => {
                     event.stopPropagation();
-                    const targetPhase = button.dataset.targetPhase;
-                    const targetElementId = `detailed-phase-${targetPhase}`;
-                    const targetElement = document.getElementById(targetElementId);
-
-                    if (targetElement) {
-                        openModal(); // Open the modal first
-                        // Wait for the modal to fully open before scrolling
-                        setTimeout(() => {
+                    const targetPhase = button.dataset.targetPhase; // Still useful if we want to scroll to a specific section later
+                    openModal(); // Just open the modal
+                    // You can add scrollIntoView here if you want to scroll to a specific phase within the static modal content
+                    setTimeout(() => {
+                        const targetElement = document.getElementById(`detailed-phase-${targetPhase}`);
+                        if (targetElement) {
                             targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }, 350); // Match modal transition duration
-                    }
+                        }
+                    }, 350); // Match modal transition duration
                 });
             });
+
+            // Lógica para la animación de onda en los círculos de la línea de tiempo
+            const timelineCircles = document.querySelectorAll('.timeline-circle');
+            timelineCircles.forEach(circle => {
+                circle.addEventListener('click', () => {
+                    circle.classList.remove('wave-active'); // Reset animation
+                    void circle.offsetWidth; // Trigger reflow
+                    circle.classList.add('wave-active'); // Re-add to restart animation
+                });
+            });
+
 
             // Lógica del Acordeón de Preguntas Frecuentes
             const accordionHeaders = document.querySelectorAll('.accordion-header');
