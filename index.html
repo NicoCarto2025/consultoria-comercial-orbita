@@ -63,14 +63,20 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             transition: background-color 0.3s ease, color 0.3s ease;
+            /* Ensure no horizontal overflow from body itself */
+            overflow-x: hidden;
         }
         h1, h2, h3, h4, h5, h6 {
             color: var(--heading-color);
+            word-break: break-word; /* Ensure headings wrap */
+            overflow-wrap: break-word;
         }
         p {
             font-size: 1rem; /* Default paragraph font size */
             line-height: 1.7; /* Improved line height for readability */
             margin-bottom: 1rem; /* Consistent bottom margin for paragraphs */
+            word-break: break-word; /* Ensure paragraphs wrap */
+            overflow-wrap: break-word;
         }
         .chart-container {
             position: relative;
@@ -607,6 +613,68 @@
 
         .modal-close-button:hover {
             color: var(--primary-blue);
+        }
+
+        /* Mobile-specific adjustments */
+        @media (max-width: 640px) { /* Tailwind's sm breakpoint */
+            h1 {
+                font-size: 2.25rem; /* text-4xl on small screens */
+            }
+            h2 {
+                font-size: 2rem; /* text-3xl on small screens */
+            }
+            h3 {
+                font-size: 1.25rem; /* text-xl on small screens */
+            }
+            p {
+                font-size: 0.95rem; /* Slightly smaller paragraphs for mobile */
+            }
+            .timeline-item {
+                padding-left: 3rem; /* Reduced padding for mobile to give more space to card */
+            }
+            .timeline-circle {
+                left: 5px; /* Adjust circle position to align better with line on mobile */
+                width: 20px; /* Slightly smaller circle */
+                height: 20px; /* Slightly smaller circle */
+                font-size: 0.75rem; /* Smaller font for circle number */
+            }
+            .timeline-line {
+                left: 15px; /* Adjust line position to match circle */
+            }
+            .timeline-card h3 {
+                font-size: 1.25rem; /* text-xl on small screens */
+            }
+            .timeline-card p {
+                font-size: 0.9rem; /* Smaller text for timeline cards */
+            }
+            .detailed-phase-title {
+                font-size: 1.5rem; /* text-2xl for modal titles on small screens */
+            }
+            .detailed-list-item {
+                font-size: 0.95rem; /* Smaller list items in modal */
+            }
+            .modal-content {
+                padding: 1.5rem; /* Reduced padding for smaller screens */
+                max-width: 95%; /* More width for content on small screens */
+                max-height: 95vh; /* Max height to prevent overflow */
+            }
+            #showDetailedPlanBtn, #closeModalBtnBottom, #scheduleMeetingBtn {
+                padding: 0.75rem 1.5rem; /* Smaller padding for buttons on mobile */
+                font-size: 0.9rem;
+            }
+            .contact-dropdown-menu a {
+                padding: 10px 12px; /* Smaller padding for dropdown items */
+                font-size: 0.9rem;
+            }
+            #contactButton {
+                padding: 8px 10px; /* Smaller padding for contact button */
+                font-size: 0.95rem;
+            }
+            /* Ensure images and charts are fluid */
+            canvas {
+                max-width: 100%;
+                height: auto; /* Maintain aspect ratio */
+            }
         }
     </style>
 </head>
