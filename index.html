@@ -137,7 +137,7 @@
             background-color: var(--dropdown-bg);
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
+            z-index: 100; /* Increased z-index to ensure it's on top */
             border-radius: 0.5rem; /* rounded-lg */
             overflow: hidden;
             top: 100%; /* Posicionar debajo del botón */
@@ -286,13 +286,15 @@
         }
 
         .phase-card ul li::before {
-            content: '✓'; /* Custom bullet point */
-            color: var(--primary-blue);
+            content: '';
             position: absolute;
             left: 0;
             font-weight: bold;
             font-size: 1.25rem;
             top: 0.15em; /* Adjusted for better vertical alignment */
+            /* Original checkmark, now replaced by detailed-list-item::before */
+            /* content: '✓';
+            color: var(--primary-blue); */
         }
 
         /* Responsive Timeline Specific Styles */
@@ -406,16 +408,10 @@
             stroke: currentColor;
         }
 
-        /* Default for odd children (Phase 0, Phase 2): Right side */
-        .timeline-item:nth-child(odd) .eye-button {
+        /* All eye buttons to the right */
+        .eye-button {
             right: 0.75rem;
-            left: auto;
-        }
-
-        /* Default for even children (Phase 1, Phase 3): Left side */
-        .timeline-item:nth-child(even) .eye-button {
-            left: 0.75rem;
-            right: auto;
+            left: auto; /* Ensure left is not set */
         }
 
         /* Specific styling for duration text */
@@ -457,6 +453,10 @@
         }
         .accordion-icon {
             transition: transform 0.3s ease;
+            width: 24px; /* Standardized size */
+            height: 24px; /* Standardized size */
+            stroke-width: 2; /* Standardized thickness */
+            flex-shrink: 0; /* Prevent shrinking in flex containers */
         }
         .accordion-icon.rotate {
             transform: rotate(180deg);
@@ -518,7 +518,8 @@
             top: 0.25em; /* Adjust for vertical alignment */
             width: 1.25rem; /* Checkmark icon size */
             height: 1.25rem; /* Checkmark icon size */
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2301BAEF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+            /* Updated SVG for a more minimalist checkmark */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2301BAEF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
             background-size: contain;
             background-repeat: no-repeat;
         }
@@ -618,62 +619,152 @@
         /* Mobile-specific adjustments */
         @media (max-width: 640px) { /* Tailwind's sm breakpoint */
             h1 {
-                font-size: 2.25rem; /* text-4xl on small screens */
+                font-size: 2rem; /* Adjusted from 2.25rem, aiming for better fit */
+                line-height: 1.2; /* Tighter line height for headings */
             }
             h2 {
-                font-size: 2rem; /* text-3xl on small screens */
+                font-size: 1.75rem; /* Adjusted from 2rem */
+                line-height: 1.2;
             }
             h3 {
-                font-size: 1.25rem; /* text-xl on small screens */
+                font-size: 1.15rem; /* Adjusted from 1.25rem, for timeline and chart titles */
+                line-height: 1.3;
             }
             p {
-                font-size: 0.95rem; /* Slightly smaller paragraphs for mobile */
+                font-size: 0.9rem; /* Adjusted from 0.95rem */
+                line-height: 1.5; /* Slightly tighter line height for paragraphs */
             }
-            .timeline-item {
-                padding-left: 3rem; /* Reduced padding for mobile to give more space to card */
+
+            /* Navigation adjustments */
+            .container { /* Ensure the main container respects padding on very small screens */
+                padding-left: 1rem; /* px-4 is 1rem, but explicitly setting it */
+                padding-right: 1rem;
             }
-            .timeline-circle {
-                left: 5px; /* Adjust circle position to align better with line on mobile */
-                width: 20px; /* Slightly smaller circle */
-                height: 20px; /* Slightly smaller circle */
-                font-size: 0.75rem; /* Smaller font for circle number */
-            }
-            .timeline-line {
-                left: 15px; /* Adjust line position to match circle */
-            }
-            .timeline-card h3 {
-                font-size: 1.25rem; /* text-xl on small screens */
-            }
-            .timeline-card p {
-                font-size: 0.9rem; /* Smaller text for timeline cards */
-            }
-            .detailed-phase-title {
-                font-size: 1.5rem; /* text-2xl for modal titles on small screens */
-            }
-            .detailed-list-item {
-                font-size: 0.95rem; /* Smaller list items in modal */
-            }
-            .modal-content {
-                padding: 1.5rem; /* Reduced padding for smaller screens */
-                max-width: 95%; /* More width for content on small screens */
-                max-height: 95vh; /* Max height to prevent overflow */
-            }
-            #showDetailedPlanBtn, #closeModalBtnBottom, #scheduleMeetingBtn {
-                padding: 0.75rem 1.5rem; /* Smaller padding for buttons on mobile */
-                font-size: 0.9rem;
-            }
-            .contact-dropdown-menu a {
-                padding: 10px 12px; /* Smaller padding for dropdown items */
-                font-size: 0.9rem;
+            .flex-shrink-0 .orbita-logo { /* Orbita™ logo */
+                font-size: 1.5rem; /* Smaller logo text for mobile */
             }
             #contactButton {
-                padding: 8px 10px; /* Smaller padding for contact button */
+                font-size: 0.85rem; /* Smaller text for contact button */
+                padding: 6px 8px; /* Smaller padding */
+            }
+            .contact-dropdown-menu a {
+                font-size: 0.85rem; /* Smaller text for dropdown items */
+                padding: 8px 12px; /* Smaller padding */
+            }
+
+            /* Timeline Section */
+            .timeline-item {
+                padding-left: 2.5rem; /* Further reduced padding-left for mobile */
+                margin-bottom: 1.5rem; /* Slightly reduced margin between items */
+            }
+            .timeline-circle {
+                left: 0.5rem; /* Adjusted to be closer to the edge */
+                width: 18px; /* Even smaller circle */
+                height: 18px; /* Even smaller circle */
+                font-size: 0.65rem; /* Smaller font for circle number */
+            }
+            .timeline-line {
+                left: 14px; /* Adjust line position to match new circle position */
+            }
+            .timeline-card {
+                padding: 1.25rem; /* Reduced padding for timeline cards */
+            }
+            .timeline-card h3 {
+                font-size: 1.1rem; /* Even smaller text for timeline card titles */
+                margin-bottom: 0.25rem; /* Tighter margin */
+            }
+            .timeline-card p {
+                font-size: 0.85rem; /* Even smaller text for timeline card paragraphs */
+            }
+            .timeline-card .duration-text {
+                margin-bottom: 0.75rem; /* Adjusted margin */
+            }
+            .eye-button {
+                width: 24px; /* Slightly smaller eye button */
+                height: 24px;
+                top: 0.5rem; /* Adjust position */
+                /* Force all eye buttons to the right on mobile */
+                right: 0.5rem; /* Consistent right positioning */
+                left: auto; /* Ensure left is not set */
+            }
+            .eye-button svg {
+                width: 16px; /* Smaller SVG icon */
+                height: 16px;
+            }
+
+            /* Data and Results Section (Charts) */
+            .grid-cols-1 { /* Ensure single column for charts on mobile */
+                grid-template-columns: 1fr;
+            }
+            .chart-container {
+                height: 280px; /* Slightly reduced height for charts on mobile */
+                max-height: 300px; /* Adjusted max height */
+            }
+            .bg-white.p-6 { /* Chart card padding */
+                padding: 1.25rem; /* Reduced padding for chart cards */
+            }
+            .bg-white.p-6 h3 { /* Chart title */
+                font-size: 1.15rem; /* Consistent with other h3 */
+            }
+            .bg-white.p-6 p { /* Chart description */
+                font-size: 0.85rem; /* Consistent with other paragraphs */
+            }
+
+            /* Our Approach Section */
+            .approach-icon-container svg {
+                width: 40px; /* Slightly smaller icons */
+                height: 40px;
+            }
+            .approach-icon-container {
+                font-size: 2.5rem; /* Adjusted font size for icon container */
+            }
+            .text-center.p-6 { /* Approach card padding */
+                padding: 1.25rem;
+            }
+
+            /* FAQ Section */
+            .accordion-header {
+                padding: 0.8rem 1rem; /* Reduced padding for accordion headers */
                 font-size: 0.95rem;
             }
-            /* Ensure images and charts are fluid */
-            canvas {
-                max-width: 100%;
-                height: auto; /* Maintain aspect ratio */
+            .accordion-content {
+                padding: 0 1rem; /* Reduced padding for accordion content */
+            }
+            .accordion-content.active {
+                padding-bottom: 1rem; /* Adjusted padding */
+            }
+            .accordion-content p {
+                font-size: 0.9rem; /* Smaller text for FAQ answers */
+            }
+            /* The following ensures consistent icon size on mobile */
+            /* Removed the specific override for accordion-header svg to let .accordion-icon apply */
+
+            /* Modal (Detailed Plan) specific adjustments */
+            .modal-content h2 {
+                font-size: 1.75rem; /* Adjusted from 3xl to be consistent with main h2 on mobile */
+            }
+            .modal-content .detailed-phase-title {
+                font-size: 1.25rem; /* Adjusted from 1.875rem to be more readable */
+            }
+            .modal-content .detailed-phase-title svg {
+                min-width: 28px; /* Slightly smaller icon for detailed phase titles */
+                min-height: 28px;
+            }
+            .modal-content h4 {
+                font-size: 1.05rem; /* Adjusted from xl to be more readable */
+            }
+            .modal-content p {
+                font-size: 0.9rem; /* Consistent with other paragraphs on mobile */
+                line-height: 1.5;
+            }
+            .modal-content .detailed-list-item {
+                font-size: 0.9rem; /* Consistent with other list items on mobile */
+                padding-left: 1.75rem; /* Adjust space for checkmark */
+            }
+            .modal-content .detailed-list-item::before {
+                width: 1rem; /* Smaller checkmark icon */
+                height: 1rem;
+                top: 0.3em; /* Adjust vertical alignment */
             }
         }
     </style>
@@ -683,9 +774,9 @@
     <!-- Barra de Navegación Superior -->
     <nav class="bg-[#0B4F6C]/80 backdrop-blur-lg w-full z-50 shadow-md">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <!-- Texto del Logo Orbita® -->
+            <!-- Texto del Logo Orbita™ -->
             <div class="flex-shrink-0">
-                <span class="text-white text-2xl font-extrabold">Orbita®</span>
+                <span class="text-white text-2xl font-extrabold orbita-logo">Orbita™</span>
             </div>
             <!-- Menú Desplegable de Contacto (Parte superior derecha) -->
             <div class="flex items-center space-x-2"> <!-- Reduced space-x from 4 to 2 -->
@@ -920,16 +1011,16 @@
                 <div class="accordion-item rounded-lg shadow-md mb-4">
                     <div class="accordion-header" data-accordion="faq1">
                         ¿Cuánto tiempo dura el proyecto completo?
-                        <svg class="accordion-icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        <svg class="accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
                     </div>
                     <div class="accordion-content" id="faq1-content">
-                        <p class="py-4">La duración de las fases iniciales (Diagnóstico, Diseño e Implementación) es de aproximadamente 6 meses. La fase de Optimización Continua es un servicio continuo adaptado a sus necesidades.</p>
+                        <p class="py-4">La duración de las fases iniciales (Diagnóstico, Diseño e Implementación) es de aproximadamente 4 meses. La fase de Optimización Continua es un servicio continuo adaptado a sus necesidades.</p>
                     </div>
                 </div>
                 <div class="accordion-item rounded-lg shadow-md mb-4">
                     <div class="accordion-header" data-accordion="faq2">
                         ¿Qué tipo de empresas se benefician más de su consultoría?
-                        <svg class="accordion-icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        <svg class="accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
                     </div>
                     <div class="accordion-content" id="faq2-content">
                         <p class="py-4">Nuestra consultoría está diseñada para empresas de diversos tamaños y sectores que buscan optimizar sus procesos comerciales, aumentar la facturación y mejorar la rentabilidad a través de estrategias personalizadas e implementación de tecnología.</p>
@@ -938,7 +1029,7 @@
                 <div class="accordion-item rounded-lg shadow-md mb-4">
                     <div class="accordion-header" data-accordion="faq3">
                         ¿Qué es Kommo y por qué lo utilizan?
-                        <svg class="accordion-icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        <svg class="accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
                     </div>
                     <div class="accordion-content" id="faq3-content">
                         <p class="py-4">Kommo es un CRM (Customer Relationship Management) diseñado para la gestión de ventas y comunicación con clientes. Lo utilizamos por su flexibilidad, facilidad de uso y potentes herramientas de automatización que se adaptan a las necesidades de pequeñas y medianas empresas.</p>
@@ -947,7 +1038,7 @@
                 <div class="accordion-item rounded-lg shadow-md mb-4">
                     <div class="accordion-header" data-accordion="faq4">
                         ¿Cómo se mide el éxito del proyecto?
-                        <svg class="accordion-icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        <svg class="accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
                     </div>
                     <div class="accordion-content" id="faq4-content">
                         <p class="py-4">El éxito se mide a través del monitoreo constante de los KPIs definidos en la Fase Uno, como el aumento de la facturación, la mejora en la tasa de conversión, la eficiencia de los procesos y la satisfacción del equipo comercial.</p>
@@ -965,8 +1056,7 @@
             </div>
              <p class="text-sm text-gray-500 mt-4">Al hacer clic, se abrirá Google Calendar con los detalles de la reunión.</p>
 
-            <!-- Orbita® 2025 en el Pie de Página -->
-            <p class="text-lg mb-2 mt-16 pt-8 border-t border-gray-200">Orbita® 2025</p>
+            <!-- REMOVED: Orbita™ 2025 en el Pie de Página -->
         </footer>
 
     </div>
